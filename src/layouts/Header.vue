@@ -4,7 +4,7 @@
       <router-link to="/" class="home">홈</router-link>
     </div>
     <div class="item">처음이신가요?</div>
-    <div class="item">피드백</div>
+    <div class="item">로그인</div>
   </div>
 </template>
 
