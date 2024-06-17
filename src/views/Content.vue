@@ -1,23 +1,24 @@
 <template>
   <div class="category">
+    <span class="category-text">계산할 카테고리를 선택해주세요</span>
     <div class="row">
-      <div class="border-box dutch-pay">
+      <router-link to="/dutch-pay" class="border-box dutch-pay">
         <span>단순 더치페이</span>
-      </div>
+      </router-link>
       
-      <div class="border-box drink">
+      <router-link to="/drink" class="border-box drink">
         <span>술</span>
-      </div>
+      </router-link>
     </div>
 
     <div class="row">
-      <div class="border-box restaurant">
+      <router-link to="/restaurant" class="border-box restaurant">
         <span>식당</span>
-      </div>
+      </router-link>
 
-      <div class="border-box grocery">
+      <router-link to="/grocery" class="border-box grocery">
         <span>식료품</span>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -44,6 +45,11 @@
   align-items: center;
 }
 
+.category-text {
+  font-size: 18px;
+  margin-bottom: 1.5rem;
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -67,6 +73,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  text-decoration: none;
 }
 
 .border-box::before {
@@ -79,6 +86,11 @@
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   z-index: 1;
+  transition: background-color 0.5s ease; /* 부드러운 전환 효과 추가 */
+}
+
+.border-box:hover::before {
+  background: rgba(0, 0, 0, 0.7); /* 마우스 오버 시 더 어둡게 변경 */
 }
 
 .border-box span {
