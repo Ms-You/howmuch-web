@@ -2,7 +2,7 @@
   <nav class="footer">
     <div class="footer-line"></div>
     <ul class="links">
-      <li><a href="#">홈</a></li>
+      <li><router-link to="/">홈</router-link></li>
       <li><a href="#">서비스 소개</a></li>
       <li><a href="#">피드백</a></li>
     </ul>

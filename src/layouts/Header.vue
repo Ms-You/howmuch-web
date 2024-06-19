@@ -1,21 +1,29 @@
 <template>
   <div class="container">
-    <div class="item">
-      <router-link to="/" class="home">홈</router-link>
-    </div>
+    <router-link to="/" class="item home">홈</router-link>
     <div class="item">처음이신가요?</div>
-    <div class="item">로그인</div>
+    <div class="item sign" v-if="!isAuthenticated">
+      <Sign />
+    </div>
+    <div class="item" v-else>로그아웃</div>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+import store from '../store/index'
+import Sign from '../views/auth/Sign.vue'
+
   export default {
     name: 'Header',
+    components: {
+      Sign
+    },
     setup() {
-
+      const isAuthenticated = computed(() => store.state.isAuthenticated);
 
       return {
-
+        isAuthenticated,
       }
     }
   }
@@ -39,5 +47,9 @@
 .home {
   color: black;
   text-decoration: none;
+}
+
+.sign {
+  cursor: pointer;
 }
 </style>
