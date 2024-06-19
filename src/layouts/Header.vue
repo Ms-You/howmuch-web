@@ -5,7 +5,7 @@
     <div class="item sign" v-if="!isAuthenticated">
       <Sign />
     </div>
-    <div class="item" v-else>로그아웃</div>
+    <div class="item sign" v-else @click="logout">로그아웃</div>
   </div>
 </template>
 
@@ -13,6 +13,7 @@
 import { computed } from 'vue'
 import store from '../store/index'
 import Sign from '../views/auth/Sign.vue'
+import instance from '../axios/index'
 
   export default {
     name: 'Header',
@@ -22,8 +23,25 @@ import Sign from '../views/auth/Sign.vue'
     setup() {
       const isAuthenticated = computed(() => store.state.isAuthenticated);
 
+      /**
+       * 로그아웃
+       */
+      const logout = () => {
+        instance.post('/api/member/logout').then((res) => {
+          console.log(res.data);
+          store.dispatch('logout');
+        }).catch((error) => {
+          if(error.response.status === 401) {
+            store.dispatch('logout');
+          } else {
+            console.log(error.response.data.message);
+          }
+        });
+      };
+
       return {
         isAuthenticated,
+        logout,
       }
     }
   }

@@ -8,6 +8,9 @@ export default createStore({
     setAuthentication(state, status) {
       state.isAuthenticated = status;
     },
+    logout(state) {
+      state.isAuthenticated = false;
+    },
   },
   actions: {
     initAuthentication({ commit }) {
@@ -18,6 +21,10 @@ export default createStore({
       } else {
         commit('setAuthentication', false);
       }
+    },
+    logout({ commit }) {
+      localStorage.removeItem('accessToken');
+      commit('logout');
     },
   },
 
