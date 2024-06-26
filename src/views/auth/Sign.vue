@@ -305,14 +305,14 @@ form button {
   padding: 10px;
   border: none;
   border-radius: 10px;
-  background-color: #000000;
+  background-color: #28a745;
   color: white;
   cursor: pointer;
   margin-top: 10px; 
 }
 
 form button:hover {
-  background-color: #000000;
+  background-color: #218838;
 }
 
 .password__match {
