@@ -2,8 +2,13 @@
   <div class="container">
     <div class="attendee">
       <div class="input-section">
-        <input type="text" placeholder="참석자 이름을 입력해주세요" v-model="newAttendee" @keyup.enter="addAttendee">
-        <button @click="addAttendee">추가</button>
+        <div class="input-group">
+          <label for="attendee-name">참석자</label>
+          <div class="input-and-button">
+            <input type="text" id="attendee-name" placeholder="참석자 이름을 입력해주세요" v-model="newAttendee" @keyup.enter="addAttendee">
+            <button @click="addAttendee">추가</button>
+          </div>
+        </div>
       </div>
       <div class="attendees-list">
         <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card">
@@ -15,15 +20,30 @@
 
     <div class="menu">
       <div class="menu-section">
-        <input type="text" placeholder="메뉴를 입력해주세요" v-model="newMenu.name">
-        <input type="number" placeholder="가격" v-model.number="newMenu.price" min="0" @input="checkPrice">
-        <input type="number" placeholder="수량" v-model.number="newMenu.quantity" min="0" @input="checkQuantity" @keyup.enter="addMenu">
-        <button @click="addMenu">추가</button>
+        <div class="input-group">
+          <label for="menu-name">메뉴</label>
+          <div class="input-and-button">
+            <input type="text" id="menu-name" placeholder="메뉴를 입력해주세요" v-model="newMenu.name">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="menu-price">가격</label>
+          <div class="input-and-button">
+            <input type="number" id="menu-price" placeholder="가격" v-model.number="newMenu.price" min="0" @input="checkPrice">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="menu-quantity">수량</label>
+          <div class="input-and-button">
+            <input type="number" id="menu-quantity" placeholder="수량" v-model.number="newMenu.quantity" min="0" @input="checkQuantity" @keyup.enter="addMenu">
+            <button @click="addMenu">추가</button>
+          </div>
+        </div>
       </div>
       <div class="menu-list">
         <div v-for="(menu, idx) in menus" :key="idx" class="menu-card">
           <span class="menu-name">{{ menu.name }}</span>
-          <span class="menu-price">{{ menu.price }}원</span>
+          <span class="menu-price">{{ lib.getPriceFormat(menu.price) }}원</span>
           <span class="menu-quantity">{{ menu.quantity }}개</span>
           <span @click="removeMenu(idx)" class="close">&times;</span>
         </div>
@@ -34,6 +54,7 @@
 
 <script>
 import { reactive, ref } from 'vue';
+import lib from '../scripts/lib';
 
 export default {
   name: 'Content',
@@ -103,6 +124,7 @@ export default {
       checkQuantity,
       addMenu,
       removeMenu,
+      lib,
     }
   }
 }
@@ -127,6 +149,13 @@ export default {
   margin-bottom: 20px;
 }
 
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-size: 16px;
+}
+
 input[type="text"] {
   flex: 1;
   padding: 10px;
@@ -143,7 +172,7 @@ input[type="number"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-right: 10px;
-  width: 25%;
+  width: 75%;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -156,6 +185,13 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+.input-and-button {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+
 button {
   padding: 10px 20px;
   font-size: 16px;
@@ -164,6 +200,7 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  height: 40px;
 }
 
 button:hover {
