@@ -49,11 +49,15 @@
         </div>
       </div>
     </div>
+
+    <div class="total-price">
+      총 금액: {{ lib.getPriceFormat(totalPrice) }}원
+    </div>
   </div>
 </template>
 
 <script>
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import lib from '../scripts/lib';
 
 export default {
@@ -69,6 +73,13 @@ export default {
       name: '',
       price: 0,
       quantity: 0,
+    });
+
+    // 총 금액 계산
+    const totalPrice = computed(() => {
+      return menus.value.reduce((total, menu) => {
+        return total + (menu.price * menu.quantity);
+      }, 0);
     });
 
     // 참석자 추가 함수
@@ -118,6 +129,7 @@ export default {
       newAttendee,
       menus,
       newMenu,
+      totalPrice,
       addAttendee,
       removeAttendee,
       checkPrice,
@@ -131,150 +143,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
+@import url(../assets/content.css);
 
-.input-section {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.menu-section {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  font-size: 16px;
-}
-
-input[type="text"] {
-  flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-input[type="number"] {
-  flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-  width: 75%;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-.input-and-button {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-}
-
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  height: 40px;
-}
-
-button:hover {
-  background-color: #218838;
-}
-
-.attendee {
-  margin-bottom: 3rem;
-}
-
-.attendees-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.attendee-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  width: 150px; /* 카드 크기 조절 */
-}
-
-.menu-card {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  width: 267px;
-}
-
-.attendee-name {
-  flex: 1;
-  font-size: 16px;
-  margin-right: 10px;
-}
-
-.menu-list {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.item-name,
-.item-price,
-.item-quantity {
-  font-size: 16px;
-}
-
-.close {
-  color: #aaa;
-  border: none;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-size: 25px;
-}
-
-.close:hover {
-  color: black;
-}
 </style>
