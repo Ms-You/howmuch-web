@@ -1,7 +1,21 @@
 .container {
-  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   margin: 0 auto;
   padding: 20px;
+  max-width: 1200px;
+}
+
+.left-section {
+  max-width: 600px;
+  flex: 1;
+  margin-right: 20px;
+}
+
+.right-section {
+  max-width: 400px;
+  flex: 1;
 }
 
 .input-section {
@@ -58,7 +72,6 @@ input[type="number"] {
   margin-top: 5px;
 }
 
-
 button {
   padding: 10px 20px;
   font-size: 16px;
@@ -81,21 +94,22 @@ button:hover {
 .attendees-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  max-height: 300px;
+  justify-content: center;
   overflow-y: auto;
 }
 
 .attendee-card {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px;
   margin: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #f8f9fa;
-  width: 150px; /* 카드 크기 조절 */
+  width: calc(33.3333% - 10px); /* 3명씩 정렬되도록 계산 */
+  box-sizing: border-box;
+  height: 160px; /* 카드의 높이 */
 }
 
 .menu-card {
@@ -115,11 +129,13 @@ button:hover {
   flex: 1;
   font-size: 16px;
   margin-right: 10px;
+  text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 .menu-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .item-name,
@@ -148,7 +164,7 @@ button:hover {
 .total-price {
   display: flex;
   justify-content: center;
-  margin: 3rem auto;
+  margin-bottom: 1rem;
   font-size: 25px;
   font-family: "Gamja Flower", sans-serif;
   font-weight: 400;

@@ -1,24 +1,6 @@
 <template>
   <div class="container">
-    <div class="attendee">
-      <div class="input-section">
-        <div class="input-group">
-          <label for="attendee-name">참석자</label>
-          <div class="input-and-button">
-            <input type="text" id="attendee-name" placeholder="참석자 이름을 입력해주세요" v-model="newAttendee" @keyup.enter="addAttendee">
-            <button @click="addAttendee">추가</button>
-          </div>
-        </div>
-      </div>
-      <div class="attendees-list">
-        <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card">
-          <span class="attendee-name">{{ attendee }}</span>
-          <span @click="removeAttendee(idx)" class="close">&times;</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="menu">
+    <div class="left-section">
       <div class="menu-section">
         <div class="input-group">
           <label for="menu-name">메뉴</label>
@@ -40,6 +22,31 @@
           </div>
         </div>
       </div>
+
+      <div class="attendee">
+        <div class="input-section">
+          <div class="input-group">
+            <label for="attendee-name">참석자</label>
+            <div class="input-and-button">
+              <input type="text" id="attendee-name" placeholder="참석자 이름을 입력해주세요" v-model="newAttendee" @keyup.enter="addAttendee">
+              <button @click="addAttendee">추가</button>
+            </div>
+          </div>
+        </div>
+        <div class="attendees-list">
+          <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card">
+            <span class="attendee-name">{{ attendee }}</span>
+            <span @click="removeAttendee(idx)" class="close">&times;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-section">
+      <div class="total-price">
+        총 금액: {{ lib.getPriceFormat(totalPrice) }}원
+      </div>
+
       <div class="menu-list">
         <div v-for="(menu, idx) in menus" :key="idx" class="menu-card">
           <span class="menu-name">{{ menu.name }}</span>
@@ -48,10 +55,7 @@
           <span @click="removeMenu(idx)" class="close">&times;</span>
         </div>
       </div>
-    </div>
 
-    <div class="total-price">
-      총 금액: {{ lib.getPriceFormat(totalPrice) }}원
     </div>
   </div>
 </template>
