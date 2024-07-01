@@ -34,9 +34,9 @@
           </div>
         </div>
         <div class="attendees-list">
-          <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card">
+          <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card" @click="openMenuCheckModal(attendee)">
             <span class="attendee-name">{{ attendee }}</span>
-            <span @click="removeAttendee(idx)" class="close">&times;</span>
+            <span @click="removeAttendee(idx, $event)" class="close">&times;</span>
           </div>
         </div>
       </div>
@@ -55,17 +55,29 @@
           <span @click="removeMenu(idx)" class="close">&times;</span>
         </div>
       </div>
-
     </div>
+    
+    <!-- MenuCheck 모달 추가 -->
+    <MenuCheck 
+      v-if="isMenuCheckModalOpen && selectedAttendee !== null" 
+      :attendeeName="selectedAttendee"
+      :menus="menus" 
+      @close="isMenuCheckModalOpen = false" 
+      @confirm="handleMenuSelection" />
+
   </div>
 </template>
 
 <script>
 import { computed, reactive, ref } from 'vue';
+import MenuCheck from './MenuCheck.vue';
 import lib from '../scripts/lib';
 
 export default {
   name: 'Content',
+  components: {
+    MenuCheck
+  },
   setup() {
     // 참석자
     const attendees = ref([]);
@@ -95,7 +107,8 @@ export default {
     }
 
     // 참석자 삭제 함수
-    const removeAttendee = (idx) => {
+    const removeAttendee = (idx, event) => {
+      event.stopPropagation();  // 이벤트 버블링 중지하기 위함
       attendees.value.splice(idx, 1);
     }
 
@@ -128,6 +141,21 @@ export default {
       menus.value.splice(idx, 1);
     }
 
+
+    // 메뉴 체크 모달 관련 상태 및 함수 추가
+    const isMenuCheckModalOpen = ref(false);
+    const selectedAttendee = ref(null);
+
+    const openMenuCheckModal = (attendee) => {
+      selectedAttendee.value = attendee;
+      isMenuCheckModalOpen.value = true;
+    };
+
+    const handleMenuSelection = (selectedMenus) => {
+      console.log(`${selectedAttendee.value}가 선택한 메뉴 목록: `, selectedMenus);
+      isMenuCheckModalOpen.value = false;
+    }
+
     return {
       attendees,
       newAttendee,
@@ -141,6 +169,10 @@ export default {
       addMenu,
       removeMenu,
       lib,
+      isMenuCheckModalOpen,
+      selectedAttendee,
+      openMenuCheckModal,
+      handleMenuSelection,
     }
   }
 }
