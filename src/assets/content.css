@@ -101,6 +101,7 @@ button:hover {
 
 .attendee-card {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 10px;
@@ -111,6 +112,7 @@ button:hover {
   width: calc(33.3333% - 10px); /* 3명씩 정렬되도록 계산 */
   box-sizing: border-box;
   height: 160px; /* 카드의 높이 */
+  position: relative; /* close 버튼 위치 조정을 위해 추가 */
 }
 
 .menu-card {
@@ -127,10 +129,9 @@ button:hover {
 }
 
 .attendee-name {
-  flex: 1;
   font-size: 16px;
-  margin-right: 10px;
   text-align: center; /* 텍스트 가운데 정렬 */
+  margin: 0;
 }
 
 .menu-list {
@@ -156,6 +157,9 @@ button:hover {
   align-items: center;
   cursor: pointer;
   font-size: 25px;
+  position: absolute; /* close 버튼 위치 조정을 위해 추가 */
+  top: 10px; /* 카드의 위쪽으로부터 10px 떨어진 위치 */
+  right: 10px; /* 카드의 오른쪽으로부터 10px 떨어진 위치 */
 }
 
 .close:hover {
@@ -171,4 +175,8 @@ button:hover {
   font-weight: 400;
   font-style: normal;
   color: rgb(70, 70, 189);
+}
+
+.attendee-total-price {
+  margin-top: 10px;
 }

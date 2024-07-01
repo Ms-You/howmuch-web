@@ -37,6 +37,9 @@
           <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card" @click="openMenuCheckModal(attendee)">
             <span class="attendee-name">{{ attendee }}</span>
             <span @click="removeAttendee(idx, $event)" class="close">&times;</span>
+            <div class="attendee-total-price">
+              {{ lib.getPriceFormat(getAttendeeTotalPrice(attendee)) }}원
+            </div>
           </div>
         </div>
       </div>
@@ -142,6 +145,10 @@ export default {
     }
 
 
+
+    // 참석자가 선택한 메뉴 데이터
+    const attendeeMenus = ref({});
+
     // 메뉴 체크 모달 관련 상태 및 함수 추가
     const isMenuCheckModalOpen = ref(false);
     const selectedAttendee = ref(null);
@@ -152,8 +159,17 @@ export default {
     };
 
     const handleMenuSelection = (selectedMenus) => {
-      console.log(`${selectedAttendee.value}가 선택한 메뉴 목록: `, selectedMenus);
+      attendeeMenus.value[selectedAttendee.value] = selectedMenus;
       isMenuCheckModalOpen.value = false;
+    }
+
+    // 참석자가 소비한 메뉴 총 가격 계산
+    const getAttendeeTotalPrice = (attendee) => {
+      const menus = attendeeMenus.value[attendee] || [];
+
+      return menus.reduce((total, menu) => {
+        return total + menu.price;
+      }, 0);
     }
 
     return {
@@ -169,10 +185,12 @@ export default {
       addMenu,
       removeMenu,
       lib,
+      attendeeMenus,
       isMenuCheckModalOpen,
       selectedAttendee,
       openMenuCheckModal,
       handleMenuSelection,
+      getAttendeeTotalPrice,
     }
   }
 }
