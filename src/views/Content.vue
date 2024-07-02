@@ -67,7 +67,8 @@
       :menus="menus"
       :selectedMenus="attendeeMenus[selectedAttendee] || []"
       @close="isMenuCheckModalOpen = false" 
-      @confirm="handleMenuSelection" />
+      @confirm="handleMenuSelection"
+      @reset="handleMenuReset" />
 
   </div>
 </template>
@@ -164,7 +165,13 @@ export default {
     const handleMenuSelection = (selectedMenus) => {
       attendeeMenus.value[selectedAttendee.value] = selectedMenus;
       isMenuCheckModalOpen.value = false;
-    }
+    };
+
+    // 참석자 별 선택된 메뉴 목록 초기화
+    const handleMenuReset = () => {
+      attendeeMenus.value[selectedAttendee.value] = [];
+      isMenuCheckModalOpen.value = false;
+    };
 
     // 참석자가 소비한 메뉴 총 가격 계산
     const getAttendeeTotalPrice = (attendee) => {
@@ -173,7 +180,7 @@ export default {
       return menus.reduce((total, menu) => {
         return total + menu.price;
       }, 0);
-    }
+    };
 
     return {
       attendees,
@@ -193,6 +200,7 @@ export default {
       selectedAttendee,
       openMenuCheckModal,
       handleMenuSelection,
+      handleMenuReset,
       getAttendeeTotalPrice,
     }
   }

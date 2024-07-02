@@ -8,6 +8,7 @@
         <label :for="'menu-' + idx">{{ menu.name }} ({{ lib.getPriceFormat(menu.price) }}원)</label>
       </div>
       <button @click="confirmSelection">확인</button>
+      <button @click="resetSelection">초기화</button>
     </div>
   </div>
 </template>
@@ -38,14 +39,22 @@ import lib from '../scripts/lib';
         selectedMenus.value = [...newSelectedMenus];
       });
 
+      // 선택한 메뉴 목록 확인
       const confirmSelection = () => {
         emit('confirm', selectedMenus.value);
         selectedMenus.value = [];
       };
 
+      // 선택한 메뉴 목록 초기화
+      const resetSelection = () => {
+        selectedMenus.value = [];
+        emit('reset');
+      }
+
       return {
         selectedMenus,
         confirmSelection,
+        resetSelection,
         lib,
       };
     }
