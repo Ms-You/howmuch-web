@@ -64,7 +64,8 @@
     <MenuCheck 
       v-if="isMenuCheckModalOpen && selectedAttendee !== null" 
       :attendeeName="selectedAttendee"
-      :menus="menus" 
+      :menus="menus"
+      :selectedMenus="attendeeMenus[selectedAttendee] || []"
       @close="isMenuCheckModalOpen = false" 
       @confirm="handleMenuSelection" />
 
@@ -107,27 +108,27 @@ export default {
         attendees.value.push(newAttendee.value);
         newAttendee.value = '';
       }
-    }
+    };
 
     // 참석자 삭제 함수
     const removeAttendee = (idx, event) => {
       event.stopPropagation();  // 이벤트 버블링 중지하기 위함
       attendees.value.splice(idx, 1);
-    }
+    };
 
     // 가격 검사 함수
     const checkPrice = () => {
       if (newMenu.price < 0) {
         newMenu.price = 0;
       }
-    }
+    };
 
     // 수량 검사 함수
     const checkQuantity = () => {
       if (newMenu.quantity < 0) {
         newMenu.quantity = 0;
       }
-    }
+    };
 
     // 메뉴 추가 함수
     const addMenu = () => {
@@ -142,22 +143,24 @@ export default {
     // 메뉴 삭제 함수
     const removeMenu = (idx) => {
       menus.value.splice(idx, 1);
-    }
-
+    };
 
 
     // 참석자가 선택한 메뉴 데이터
     const attendeeMenus = ref({});
 
-    // 메뉴 체크 모달 관련 상태 및 함수 추가
+    // 메뉴 체크 모달창 클릭 여부
     const isMenuCheckModalOpen = ref(false);
+    // 메뉴 선택을 위해 선택된 참석자
     const selectedAttendee = ref(null);
 
+    // 메뉴 체크 모달창 상태 수정
     const openMenuCheckModal = (attendee) => {
       selectedAttendee.value = attendee;
       isMenuCheckModalOpen.value = true;
     };
 
+    // 참석자 별 선택된 메뉴 목록
     const handleMenuSelection = (selectedMenus) => {
       attendeeMenus.value[selectedAttendee.value] = selectedMenus;
       isMenuCheckModalOpen.value = false;

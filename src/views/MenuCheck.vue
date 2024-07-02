@@ -13,18 +13,30 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import lib from '../scripts/lib';
 
   export default {
     name: 'MenuCheck',
     props: {
       attendeeName: String,
-      menus: Array
+      menus: {
+        type: Array,
+        required: true
+      },
+      selectedMenus: {
+        type: Array,
+        default: () => []
+      }
     },
     setup(props, { emit }) {
       // 선택된 메뉴들
-      const selectedMenus = ref([]);
+      const selectedMenus = ref([...props.selectedMenus]);
+
+      // 선택된 메뉴가 변경될 때마다 업데이트
+      watch(() => props.selectedMenus, (newSelectedMenus) => {
+        selectedMenus.value = [...newSelectedMenus];
+      });
 
       const confirmSelection = () => {
         emit('confirm', selectedMenus.value);
