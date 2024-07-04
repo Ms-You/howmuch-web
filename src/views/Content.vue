@@ -35,13 +35,17 @@
         </div>
         <div class="attendees-list">
           <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card" @click="openMenuCheckModal(attendee)">
-            <span class="attendee-name">{{ attendee }}</span>
+            <span class="attendee-name">{{ attendee.name }}</span>
             <span @click="removeAttendee(idx, $event)" class="close">&times;</span>
             <div class="attendee-total-price">
               {{ lib.getPriceFormat(getAttendeeTotalPrice(attendee)) }}원
             </div>
           </div>
         </div>
+      </div>
+      
+      <div class="submit-section">
+        <button class="calculate-button" @click="dutchPay()">계산하기</button>
       </div>
     </div>
 
@@ -77,6 +81,7 @@
 import { computed, reactive, ref } from 'vue';
 import MenuCheck from './MenuCheck.vue';
 import lib from '../scripts/lib';
+import axios from 'axios';
 
 export default {
   name: 'Content',
@@ -106,7 +111,7 @@ export default {
     // 참석자 추가 함수
     const addAttendee = () => {
       if (newAttendee.value.trim() !== '') {
-        attendees.value.push(newAttendee.value);
+        attendees.value.push({ name: newAttendee.value });
         newAttendee.value = '';
       }
     };
@@ -163,24 +168,44 @@ export default {
 
     // 참석자 별 선택된 메뉴 목록
     const handleMenuSelection = (selectedMenus) => {
-      attendeeMenus.value[selectedAttendee.value] = selectedMenus;
+      attendeeMenus.value[selectedAttendee.value.name] = selectedMenus;
       isMenuCheckModalOpen.value = false;
     };
 
     // 참석자 별 선택된 메뉴 목록 초기화
     const handleMenuReset = () => {
-      attendeeMenus.value[selectedAttendee.value] = [];
+      attendeeMenus.value[selectedAttendee.value.name] = [];
       isMenuCheckModalOpen.value = false;
     };
 
     // 참석자가 소비한 메뉴 총 가격 계산
     const getAttendeeTotalPrice = (attendee) => {
-      const menus = attendeeMenus.value[attendee] || [];
+      const menus = attendeeMenus.value[attendee.name] || [];
 
       return menus.reduce((total, menu) => {
         return total + menu.price;
       }, 0);
     };
+
+    const dutchPay = async () => {
+      try {
+        const res = await axios.post('/api/dutch-pay', {
+          attendees: attendees.value,
+          menus: menus.value,
+          attendeeMenus: attendeeMenus.value
+        });
+
+        // 받아온 응답을 참석자 별 내야할 금액으로 보여줌
+        console.log(res.data);
+
+      } catch (error) {
+        if(error.response || error.response.data) {
+          console.log(error.response.data.message);
+        } else {
+          console.log('더치페이 수행 중 오류가 발생했습니다.');
+        }
+      }
+    }
 
     return {
       attendees,
@@ -202,6 +227,7 @@ export default {
       handleMenuSelection,
       handleMenuReset,
       getAttendeeTotalPrice,
+      dutchPay
     }
   }
 }

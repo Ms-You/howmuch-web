@@ -180,3 +180,15 @@ button:hover {
 .attendee-total-price {
   margin-top: 10px;
 }
+
+.submit-section {
+  display: flex;
+  justify-content: center;
+}
+.calculate-button {
+  width: 125px;
+}
+
+.calculate-button:hover {
+  background-color: rgb(70, 70, 189);;
+}
