@@ -110,7 +110,7 @@ export default {
 
     // 참석자 추가 함수
     const addAttendee = () => {
-      if (newAttendee.value.trim() !== '') {
+      if(newAttendee.value.trim() !== '') {
         attendees.value.push({ name: newAttendee.value });
         newAttendee.value = '';
       }
@@ -168,25 +168,28 @@ export default {
 
     // 참석자 별 선택된 메뉴 목록
     const handleMenuSelection = (selectedMenus) => {
-      attendeeMenus.value[selectedAttendee.value.name] = selectedMenus;
+      attendeeMenus.value[selectedAttendee.value] = selectedMenus;
       isMenuCheckModalOpen.value = false;
     };
 
     // 참석자 별 선택된 메뉴 목록 초기화
     const handleMenuReset = () => {
-      attendeeMenus.value[selectedAttendee.value.name] = [];
+      attendeeMenus.value[selectedAttendee.value] = [];
       isMenuCheckModalOpen.value = false;
     };
 
     // 참석자가 소비한 메뉴 총 가격 계산
     const getAttendeeTotalPrice = (attendee) => {
-      const menus = attendeeMenus.value[attendee.name] || [];
+      const menus = attendeeMenus.value[attendee] || [];
 
       return menus.reduce((total, menu) => {
         return total + menu.price;
       }, 0);
     };
 
+    /**
+     * 더치페이 API 호출
+     */
     const dutchPay = async () => {
       try {
         const res = await axios.post('/api/dutch-pay', {
@@ -196,7 +199,7 @@ export default {
         });
 
         // 받아온 응답을 참석자 별 내야할 금액으로 보여줌
-        console.log(res.data);
+        console.log(res.data.result);
 
       } catch (error) {
         if(error.response || error.response.data) {
