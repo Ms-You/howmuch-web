@@ -59,7 +59,7 @@
           <span class="menu-name">{{ menu.name }}</span>
           <span class="menu-price">{{ lib.getPriceFormat(menu.price) }}원</span>
           <span class="menu-quantity">{{ menu.quantity }}개</span>
-          <span @click="removeMenu(idx)" class="close">&times;</span>
+          <span @click="removeMenu(idx)" class="menu-close">&times;</span>
         </div>
       </div>
     </div>

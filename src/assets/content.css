@@ -162,7 +162,22 @@ button:hover {
   right: 10px; /* 카드의 오른쪽으로부터 10px 떨어진 위치 */
 }
 
-.close:hover {
+.menu-close {
+  color: #aaa;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 25px;
+  top: 10px; /* 카드의 위쪽으로부터 10px 떨어진 위치 */
+  right: 10px; /* 카드의 오른쪽으로부터 10px 떨어진 위치 */
+}
+
+.close .menu-close:hover {
   color: black;
 }
 
