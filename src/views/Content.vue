@@ -35,7 +35,7 @@
         </div>
         <div class="attendees-list">
           <div v-for="(attendee, idx) in attendees" :key="idx" class="attendee-card" @click="openMenuCheckModal(attendee)">
-            <span class="attendee-name">{{ attendee.name }}</span>
+            <span class="attendee-name">{{ attendee }}</span>
             <span @click="removeAttendee(idx, $event)" class="close">&times;</span>
             <div class="attendee-total-price">
               {{ lib.getPriceFormat(getAttendeeTotalPrice(attendee)) }}원
@@ -111,7 +111,7 @@ export default {
     // 참석자 추가 함수
     const addAttendee = () => {
       if(newAttendee.value.trim() !== '') {
-        attendees.value.push({ name: newAttendee.value });
+        attendees.value.push(newAttendee.value);
         newAttendee.value = '';
       }
     };
@@ -192,8 +192,11 @@ export default {
      */
     const dutchPay = async () => {
       try {
+        // 참석자 명 전달을 위함
+        const formattedAttendees = attendees.value.map(name => ({ name }));
+
         const res = await axios.post('/api/dutch-pay', {
-          attendees: attendees.value,
+          attendees: formattedAttendees,
           menus: menus.value,
           attendeeMenus: attendeeMenus.value
         });

@@ -2,7 +2,7 @@
   <div class="menu-modal">
     <div class="modal-content">
       <span class="close" @click="$emit('close')">&times;</span>
-      <h3>{{ attendeeName.name }}님이 먹은 메뉴를 선택해주세요.</h3>
+      <h3>{{ attendeeName }}님이 먹은 메뉴를 선택해주세요.</h3>
       <div v-for="(menu, idx) in menus" :key="idx" class="menu-item">
         <input type="checkbox" :id="'menu-' + idx" v-model="selectedMenus" :value="menu">
         <label :for="'menu-' + idx">{{ menu.name }} ({{ lib.getPriceFormat(menu.price) }}원)</label>
@@ -20,7 +20,7 @@ import lib from '../scripts/lib';
   export default {
     name: 'MenuCheck',
     props: {
-      attendeeName: Object,
+      attendeeName: String,
       menus: {
         type: Array,
         required: true
