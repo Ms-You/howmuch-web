@@ -38,7 +38,7 @@
             <span class="attendee-name">{{ attendee }}</span>
             <span @click="removeAttendee(idx, $event)" class="close">&times;</span>
             <div class="attendee-total-price">
-              {{ lib.getPriceFormat(getAttendeeTotalPrice(attendee)) }}원
+              <span class="selected-menu-list">{{ getAttendeeSelectedMenus(attendee) }}</span>
             </div>
           </div>
         </div>
@@ -179,12 +179,25 @@ export default {
     };
 
     // 참석자가 소비한 메뉴 총 가격 계산
-    const getAttendeeTotalPrice = (attendee) => {
-      const menus = attendeeMenus.value[attendee] || [];
+    // const getAttendeeTotalPrice = (attendee) => {
+    //   const menus = attendeeMenus.value[attendee] || [];
 
-      return menus.reduce((total, menu) => {
-        return total + menu.price;
-      }, 0);
+    //   return menus.reduce((total, menu) => {
+    //     return total + menu.price;
+    //   }, 0);
+    // };
+
+    // 참석자가 선택한 메뉴 목록 보여주기 위함
+    const getAttendeeSelectedMenus = (attendee) => {
+      const menus = attendeeMenus.value[attendee] || [];
+      
+      if(menus.length === 0) {
+        return '선택한 메뉴 없음';
+      } else if(menus.length === 1) {
+        return `${menus[0].name}`;
+      } else {
+        return `${menus[0].name} 외 ${menus.length-1}개`;
+      }
     };
 
     /**
@@ -232,8 +245,9 @@ export default {
       openMenuCheckModal,
       handleMenuSelection,
       handleMenuReset,
-      getAttendeeTotalPrice,
-      dutchPay
+      // getAttendeeTotalPrice,
+      getAttendeeSelectedMenus,
+      dutchPay,
     }
   }
 }
