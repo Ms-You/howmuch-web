@@ -47,6 +47,8 @@
       <div class="submit-section">
         <button class="calculate-button" @click="dutchPay()">계산하기</button>
       </div>
+
+      <DutchPayResult />
     </div>
 
     <div class="right-section">
@@ -82,11 +84,14 @@ import { computed, reactive, ref } from 'vue';
 import MenuCheck from './MenuCheck.vue';
 import lib from '../scripts/lib';
 import axios from 'axios';
+import store from '../store/index';
+import DutchPayResult from './DutchPayResult.vue';
 
 export default {
   name: 'Content',
   components: {
-    MenuCheck
+    MenuCheck,
+    DutchPayResult,
   },
   setup() {
     // 참석자
@@ -215,6 +220,7 @@ export default {
         });
 
         // 받아온 응답을 참석자 별 내야할 금액으로 보여줌
+        store.dispatch('updateDutchPayResult', res.data.result);
         console.log(res.data.result);
 
       } catch (error) {
