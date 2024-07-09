@@ -207,3 +207,11 @@ button:hover {
 .calculate-button:hover {
   background-color: rgb(70, 70, 189);;
 }
+
+.no-menu {
+  color: blue;
+}
+
+.select-menu {
+  color: green;
+}

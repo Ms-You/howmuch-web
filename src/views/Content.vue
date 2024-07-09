@@ -38,7 +38,7 @@
             <span class="attendee-name">{{ attendee }}</span>
             <span @click="removeAttendee(idx, $event)" class="close">&times;</span>
             <div class="attendee-total-price">
-              <span class="selected-menu-list">{{ getAttendeeSelectedMenus(attendee) }}</span>
+              <span :class="getAttendeeSelectedMenusClass(attendee)">{{ getAttendeeSelectedMenus(attendee) }}</span>
             </div>
           </div>
         </div>
@@ -206,6 +206,13 @@ export default {
       }
     };
 
+    // 메뉴 선택 여부에 따라 텍스트 색 변경
+    const getAttendeeSelectedMenusClass = (attendee) => {
+      const menus = attendeeMenus.value[attendee] || [];
+
+      return menus.length === 0 ? 'no-menu' : 'select-menu';
+    }
+
     /**
      * 더치페이 API 호출
      */
@@ -213,7 +220,7 @@ export default {
       try {
         // 참석자 명 전달을 위함
         const formattedAttendees = attendees.value.map(name => ({ name }));
-        
+
         const res = await axios.post('/api/dutch-pay', {
           attendees: formattedAttendees,
           menus: menus.value,
@@ -254,6 +261,7 @@ export default {
       handleMenuReset,
       // getAttendeeTotalPrice,
       getAttendeeSelectedMenus,
+      getAttendeeSelectedMenusClass,
       dutchPay,
     }
   }
