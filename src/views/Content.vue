@@ -124,7 +124,8 @@ export default {
     // 참석자 삭제 함수
     const removeAttendee = (idx, event) => {
       event.stopPropagation();  // 이벤트 버블링 중지하기 위함
-      attendees.value.splice(idx, 1);
+      const removedAttendee = attendees.value.splice(idx, 1)[0];
+      delete attendeeMenus.value[removedAttendee];  // 참석자가 선택한 메뉴 정보도 삭제
     };
 
     // 가격 검사 함수
@@ -212,7 +213,7 @@ export default {
       try {
         // 참석자 명 전달을 위함
         const formattedAttendees = attendees.value.map(name => ({ name }));
-
+        
         const res = await axios.post('/api/dutch-pay', {
           attendees: formattedAttendees,
           menus: menus.value,
