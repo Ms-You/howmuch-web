@@ -9,7 +9,7 @@
         </li>
       </ul>
       <div class="total-price">
-        총 금액: {{ lib.getPriceFormat(totalPrice) }}원
+        총 금액: {{ lib.getPriceFormat(Math.round(totalPrice * 10) / 10) }}원
       </div>
     </div>
   </div>
