@@ -72,5 +72,5 @@ import { reactive } from 'vue';
 </script>
 
 <style scoped>
-@import url(../../assets/menu-input.css);
+@import url(../../assets/menu/menu-input.css);
 </style>

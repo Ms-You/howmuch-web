@@ -52,5 +52,5 @@ import lib from '../../scripts/lib';
 </script>
 
 <style scoped>
-@import url(../../assets/menu-list.css);
+@import url(../../assets/menu/menu-list.css);
 </style>

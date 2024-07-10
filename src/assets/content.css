@@ -19,35 +19,6 @@
   flex: 1;
 }
 
-.input-section {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  font-size: 16px;
-}
-
-input[type="text"] {
-  flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.input-and-button {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-}
-
 button {
   padding: 10px 20px;
   font-size: 16px;
@@ -67,75 +38,15 @@ button:hover {
   margin-bottom: 3rem;
 }
 
-.attendees-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  overflow-y: auto;
-}
-
-.attendee-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  width: calc(33.3333% - 10px); /* 3명씩 정렬되도록 계산 */
-  box-sizing: border-box;
-  height: 160px; /* 카드의 높이 */
-  position: relative; /* close 버튼 위치 조정을 위해 추가 */
-}
-
-.attendee-name {
-  font-size: 16px;
-  text-align: center; /* 텍스트 가운데 정렬 */
-  margin: 0;
-}
-
-.close {
-  color: #aaa;
-  border: none;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-size: 25px;
-  position: absolute; /* close 버튼 위치 조정을 위해 추가 */
-  top: 10px; /* 카드의 위쪽으로부터 10px 떨어진 위치 */
-  right: 10px; /* 카드의 오른쪽으로부터 10px 떨어진 위치 */
-}
-
-.close {
-  color: black;
-}
-
-.attendee-total-price {
-  margin-top: 10px;
-}
-
 .submit-section {
   display: flex;
   justify-content: center;
 }
+
 .calculate-button {
   width: 125px;
 }
 
 .calculate-button:hover {
   background-color: rgb(70, 70, 189);;
-}
-
-.no-menu {
-  color: blue;
-}
-
-.select-menu {
-  color: green;
 }
