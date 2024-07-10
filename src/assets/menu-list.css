@@ -1,0 +1,54 @@
+.total-price {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 25px;
+  font-family: "Gamja Flower", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: rgb(70, 70, 189);
+}
+
+.menu-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  width: 267px;
+}
+
+.menu-name,
+.menu-price,
+.menu-quantity {
+  font-size: 16px;
+}
+
+.menu-close {
+  color: #aaa;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 25px;
+  top: 10px; /* 카드의 위쪽으로부터 10px 떨어진 위치 */
+  right: 10px; /* 카드의 오른쪽으로부터 10px 떨어진 위치 */
+}
+
+.menu-close:hover {
+  color: black;
+}

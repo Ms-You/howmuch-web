@@ -1,27 +1,8 @@
 <template>
   <div class="container">
     <div class="left-section">
-      <div class="menu-section">
-        <div class="input-group">
-          <label for="menu-name">메뉴</label>
-          <div class="input-and-button">
-            <input type="text" id="menu-name" placeholder="메뉴를 입력해주세요" v-model="newMenu.name">
-          </div>
-        </div>
-        <div class="input-group">
-          <label for="menu-price">가격</label>
-          <div class="input-and-button">
-            <input type="number" id="menu-price" placeholder="가격" v-model.number="newMenu.price" min="0" @input="checkPrice">
-          </div>
-        </div>
-        <div class="input-group">
-          <label for="menu-quantity">수량</label>
-          <div class="input-and-button">
-            <input type="number" id="menu-quantity" placeholder="수량" v-model.number="newMenu.quantity" min="0" @input="checkQuantity" @keyup.enter="addMenu">
-            <button @click="addMenu">추가</button>
-          </div>
-        </div>
-      </div>
+      <!-- 메뉴 입력 컴포넌트 -->
+      <MenuInput @add-menu="addMenu" />
 
       <div class="attendee">
         <div class="input-section">
@@ -48,22 +29,13 @@
         <button class="calculate-button" @click="dutchPay()">계산하기</button>
       </div>
 
+      <!-- 더치페이 결과 컴포넌트 -->
       <DutchPayResult />
     </div>
 
     <div class="right-section">
-      <div class="total-price">
-        총 금액: {{ lib.getPriceFormat(totalPrice) }}원
-      </div>
-
-      <div class="menu-list">
-        <div v-for="(menu, idx) in menus" :key="idx" class="menu-card">
-          <span class="menu-name">{{ menu.name }}</span>
-          <span class="menu-price">{{ lib.getPriceFormat(menu.price) }}원</span>
-          <span class="menu-quantity">{{ menu.quantity }}개</span>
-          <span @click="removeMenu(idx)" class="menu-close">&times;</span>
-        </div>
-      </div>
+      <!-- 메뉴 목록 컴포넌트 -->
+      <MenuList :menus="menus" @remove-menu="removeMenu" />
     </div>
     
     <!-- MenuCheck 모달 추가 -->
@@ -81,6 +53,8 @@
 
 <script>
 import { computed, reactive, ref } from 'vue';
+import MenuInput from './menu/MenuInput.vue';
+import MenuList from './menu/MenuList.vue';
 import MenuCheck from './MenuCheck.vue';
 import lib from '../scripts/lib';
 import axios from 'axios';
@@ -90,6 +64,8 @@ import DutchPayResult from './DutchPayResult.vue';
 export default {
   name: 'Content',
   components: {
+    MenuInput,
+    MenuList,
     MenuCheck,
     DutchPayResult,
   },
@@ -98,20 +74,8 @@ export default {
     const attendees = ref([]);
     const newAttendee = ref('');
 
-    // 메뉴
+    // 메뉴 목록
     const menus = ref([]);
-    const newMenu = reactive({
-      name: '',
-      price: 0,
-      quantity: 0,
-    });
-
-    // 총 금액 계산
-    const totalPrice = computed(() => {
-      return menus.value.reduce((total, menu) => {
-        return total + (menu.price * menu.quantity);
-      }, 0);
-    });
 
     // 참석자 추가 함수
     const addAttendee = () => {
@@ -128,28 +92,9 @@ export default {
       delete attendeeMenus.value[removedAttendee];  // 참석자가 선택한 메뉴 정보도 삭제
     };
 
-    // 가격 검사 함수
-    const checkPrice = () => {
-      if (newMenu.price < 0) {
-        newMenu.price = 0;
-      }
-    };
-
-    // 수량 검사 함수
-    const checkQuantity = () => {
-      if (newMenu.quantity < 0) {
-        newMenu.quantity = 0;
-      }
-    };
-
     // 메뉴 추가 함수
-    const addMenu = () => {
-      if (newMenu.name.trim() !== '' && newMenu.price > 0 && newMenu.quantity > 0) {
-        menus.value.push({ ...newMenu });
-        newMenu.name = '';
-        newMenu.price = 0;
-        newMenu.quantity = 0;
-      }
+    const addMenu = (menu) => {
+        menus.value.push(menu);
     };
 
     // 메뉴 삭제 함수
@@ -183,15 +128,6 @@ export default {
       attendeeMenus.value[selectedAttendee.value] = [];
       isMenuCheckModalOpen.value = false;
     };
-
-    // 참석자가 소비한 메뉴 총 가격 계산
-    // const getAttendeeTotalPrice = (attendee) => {
-    //   const menus = attendeeMenus.value[attendee] || [];
-
-    //   return menus.reduce((total, menu) => {
-    //     return total + menu.price;
-    //   }, 0);
-    // };
 
     // 참석자가 선택한 메뉴 목록 보여주기 위함
     const getAttendeeSelectedMenus = (attendee) => {
@@ -244,12 +180,8 @@ export default {
       attendees,
       newAttendee,
       menus,
-      newMenu,
-      totalPrice,
       addAttendee,
       removeAttendee,
-      checkPrice,
-      checkQuantity,
       addMenu,
       removeMenu,
       lib,
@@ -259,7 +191,6 @@ export default {
       openMenuCheckModal,
       handleMenuSelection,
       handleMenuReset,
-      // getAttendeeTotalPrice,
       getAttendeeSelectedMenus,
       getAttendeeSelectedMenusClass,
       dutchPay,
