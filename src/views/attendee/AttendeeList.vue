@@ -42,10 +42,15 @@
 
         if(menus.length === 0) {
           return '선택한 메뉴 없음';
-        } else if(menus.length === 1) {
-          return `${menus[0].name}`;
         } else {
-          return `${menus[0].name} 외 ${menus.length-1}개`;
+          // 참석자가 선택한 메뉴 명을 오름차순 정렬
+          const sortedMenu = menus.slice().sort((a, b) => a.name < b.name ? -1 : 1);
+
+          if(sortedMenu.length === 1) {
+            return `${sortedMenu[0].name}`;
+          } else {
+            return `${sortedMenu[0].name} 외 ${sortedMenu.length-1}개`;
+          }
         }
       };
 
