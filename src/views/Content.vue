@@ -19,6 +19,7 @@
       
       <div class="submit-section">
         <button class="calculate-button" @click="dutchPay()">계산하기</button>
+        <button class="reset-button" @click="resetInput()">초기화</button>
       </div>
 
       <!-- 더치페이 결과 컴포넌트 -->
@@ -116,6 +117,19 @@ export default {
       isMenuCheckModalOpen.value = false;
     };
 
+    // 모든 입력 데이터 초기화
+    const resetInput = () => {
+      const res = window.confirm("초기화 하시겠습니까?");
+
+      if(res === true) {
+        menus.value = [];
+        attendees.value = [];
+        delete attendeeMenus.value;
+        store.dispatch('updateDutchPayResult', null);
+        handleMenuReset();
+      }
+    };
+
     /**
      * 더치페이 API 호출
      */
@@ -156,6 +170,7 @@ export default {
       openMenuCheckModal,
       handleMenuSelection,
       handleMenuReset,
+      resetInput,
       dutchPay,
       lib,
     }

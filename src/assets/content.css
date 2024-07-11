@@ -48,5 +48,15 @@ button:hover {
 }
 
 .calculate-button:hover {
-  background-color: rgb(70, 70, 189);;
+  background-color: rgb(70, 189, 106);;
+}
+
+.reset-button {
+  width: 125px;
+  margin-left: 1rem;
+  background-color: rgb(70, 70, 189);
+}
+
+.reset-button:hover {
+  background-color: rgb(124, 124, 226);
 }
