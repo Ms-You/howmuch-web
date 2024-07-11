@@ -124,7 +124,7 @@ export default {
       if(res === true) {
         menus.value = [];
         attendees.value = [];
-        delete attendeeMenus.value;
+        attendeeMenus.value = {};
         store.dispatch('updateDutchPayResult', null);
         handleMenuReset();
       }
