@@ -89,7 +89,12 @@ export default {
 
     // 메뉴 삭제 함수
     const removeMenu = (idx) => {
-      menus.value.splice(idx, 1);
+      const removedMenu = menus.value.splice(idx, 1)[0];
+
+      // 참석자가 선택한 메뉴에서도 삭제
+      for(const attendee in attendeeMenus.value) {
+        attendeeMenus.value[attendee] = attendeeMenus.value[attendee].filter(menu => menu !== removedMenu);
+      }
     };
 
     // 참석자 추가 함수
