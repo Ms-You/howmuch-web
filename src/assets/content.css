@@ -43,6 +43,12 @@ button:hover {
   justify-content: center;
 }
 
+.dutch-pay-result-section {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
 .calculate-button {
   width: 125px;
 }
@@ -53,7 +59,6 @@ button:hover {
 
 .reset-button {
   width: 125px;
-  margin-left: 1rem;
   background-color: rgb(70, 70, 189);
 }
 

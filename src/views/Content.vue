@@ -19,11 +19,13 @@
       
       <div class="submit-section">
         <button class="calculate-button" @click="dutchPay()">계산하기</button>
-        <button class="reset-button" @click="resetInput()">초기화</button>
       </div>
 
       <!-- 더치페이 결과 컴포넌트 -->
       <DutchPayResult />
+      <div class="dutch-pay-result-section" v-if="dutchPayResultState">
+        <button class="reset-button" @click="resetInput()">초기화</button>
+      </div>
     </div>
 
     <div class="right-section">
@@ -44,7 +46,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import MenuInput from './menu/MenuInput.vue';
 import MenuList from './menu/MenuList.vue';
 import MenuCheck from './MenuCheck.vue';
@@ -77,6 +79,8 @@ export default {
     const isMenuCheckModalOpen = ref(false);
     // 메뉴 선택을 위해 선택된 참석자
     const selectedAttendee = ref(null);
+    // 더치페이 결과 존재 여부 확인
+    const dutchPayResultState = computed(() => store.getters.dutchPayResult);
 
     // 메뉴 추가 함수
     const addMenu = (menu) => {
@@ -163,6 +167,7 @@ export default {
       attendeeMenus,
       isMenuCheckModalOpen,
       selectedAttendee,
+      dutchPayResultState,
       addMenu,
       removeMenu,
       addAttendee,
